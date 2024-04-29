@@ -17,10 +17,14 @@ SRCREV = "c286db0cd8cbfc51e4995b6e1f77cb9729d7871b"
 # in your assignments repo
 S = "${WORKDIR}/git/server"
 
+# Init scripts
+inherit update-rc.d
+INITSCRIPT_PACKAGES = "${PN}"
+INITSCRIPT_NAME:${PN} = "aesdsocket-start-stop"
+
 # TODO: Add the aesdsocket application and any other files you need to install
 # See https://git.yoctoproject.org/poky/plain/meta/conf/bitbake.conf?h=kirkstone
 FILES:${PN} += "${bindir}/aesdsocket"
-FILES:${PN} += "${bindir}/aesdsocket-start-stop"
 TARGET_LDFLAGS += "-pthread -lrt"
 
 do_configure () {
@@ -28,6 +32,7 @@ do_configure () {
 }
 
 do_compile () {
+
 	oe_runmake
 }
 
